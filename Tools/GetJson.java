@@ -80,6 +80,8 @@ public class GetJson extends HttpTools {
                     byteArrayOutputStream.flush();
                 }
                 bitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size());
+                inputStream.close();
+                byteArrayOutputStream.close();
             }
         }
         return bitmap;
