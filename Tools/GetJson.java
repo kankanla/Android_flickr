@@ -61,7 +61,7 @@ public class GetJson extends HttpTools {
         return "https://farm" + item_hashMap.get("farm") + ".staticflickr.com/" + item_hashMap.get("server") + "/" + item_hashMap.get("id") + "_" + item_hashMap.get("secret") + ".jpg";
     }
 
-    public static Bitmap getBitmap(String img_url) throws Exception {
+    public static Bitmap getBitmap_old(String img_url) throws Exception {
         URL url = new URL(img_url);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setConnectTimeout(10000);
@@ -83,6 +83,21 @@ public class GetJson extends HttpTools {
                 inputStream.close();
                 byteArrayOutputStream.close();
             }
+        }
+        return bitmap;
+    }
+
+    public static Bitmap getBitmap(String img_url) throws Exception {
+        URL url = new URL(img_url);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setConnectTimeout(10000);
+        httpURLConnection.setReadTimeout(10000);
+        httpURLConnection.setDoInput(true);
+        httpURLConnection.setRequestMethod("GET");
+        Bitmap bitmap = null;
+        if (httpURLConnection.getResponseCode() == httpURLConnection.HTTP_OK) {
+            InputStream inputStream = httpURLConnection.getInputStream();
+            bitmap = BitmapFactory.decodeStream(inputStream);
         }
         return bitmap;
     }
