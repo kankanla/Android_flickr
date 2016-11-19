@@ -1,5 +1,6 @@
-package com.example.java.m1115a;
+package com.example.e560.m1117a;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.java.m1115a.Tools.GetJson;
+import com.example.e560.m1117a.Tools.GetJson;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                new img().execute("http://cdefgab.web.fc2.com/song.json", String.valueOf(cont));
-                cont++;
+                Intent intent = new Intent(MainActivity.this,Mlistview.class);
+                startActivity(intent);
+//                new img().execute("http://cdefgab.web.fc2.com/song.json", String.valueOf(cont));
+//                cont++;
             }
         });
     }
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             int cont = Integer.parseInt(params[1]);
             Bitmap bitmap = null;
             try {
-                bitmap = GetJson.getBitmap(GetJson.img_url(json.jsonMap().get(cont)));
+                bitmap = GetJson.getBitmap(GetJson.img_url(json.jsonMap().get(cont),"q"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -52,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(bitmap);
             if (bitmap == null) {
                 Toast.makeText(MainActivity.this, "noImg", Toast.LENGTH_SHORT).show();
+            }else {
+                ImageView iv = (ImageView) findViewById(R.id.imageView);
+                iv.setImageBitmap(bitmap);
             }
-            ImageView iv = (ImageView) findViewById(R.id.imageView);
-            iv.setImageBitmap(bitmap);
         }
     }
 }
-
 

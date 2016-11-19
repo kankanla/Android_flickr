@@ -1,4 +1,4 @@
-package com.example.java.m1115a.Tools;
+package com.example.e560.m1117a.Tools;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by java on 2016/11/15.
+ * Created by E560 on 2016/11/17.
  */
 
 public class HttpTools {

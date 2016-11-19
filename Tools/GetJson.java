@@ -1,4 +1,4 @@
-package com.example.java.m1115a.Tools;
+package com.example.e560.m1117a.Tools;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,7 +42,7 @@ public class GetJson extends HttpTools {
         return jMap;
     }
 
-    public static String img_url(HashMap<String, String> item_hashMap) throws Exception {
+    public static String img_url(HashMap<String, String> item_hashMap, String imgsize) throws Exception {
         /*
         *
         * https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
@@ -55,10 +55,28 @@ public class GetJson extends HttpTools {
         * String secret = item_hashMap.get("secret");
         * String img_url = "https://farm" + farmid + ".staticflickr.com/" + Serverid + "/" + id + "_" + secret + ".jpg";
         * System.out.println(img_url);
+        * s	小正方形 75x75
+        * q	large square 150x150
+        * t	縮圖，最長邊為 100
+        * m	小，最長邊為 240
+        * n	small, 320 on longest side
+        * -	中等，最長邊為 500
+        * z	中等尺寸 640，最長邊為 640
+        * c	中等尺寸 800，最長邊為 800†
+        * b	大尺寸，最長邊為 1024*
+        * h	大型 1600，長邊 1600†
+        * k	大型 2048，長邊 2048†
+        * o	原始圖片, 根據來源格式可以是 jpg、gif 或 png
+        *
         */
 
         HashMap<String, String> temp_map = item_hashMap;
-        return "https://farm" + item_hashMap.get("farm") + ".staticflickr.com/" + item_hashMap.get("server") + "/" + item_hashMap.get("id") + "_" + item_hashMap.get("secret") + ".jpg";
+        if(imgsize.equals("w")){
+            return "https://farm" + item_hashMap.get("farm") + ".staticflickr.com/" + item_hashMap.get("server") + "/" + item_hashMap.get("id") + "_" + item_hashMap.get("secret") + ".jpg";
+
+        }else {
+            return "https://farm" + item_hashMap.get("farm") + ".staticflickr.com/" + item_hashMap.get("server") + "/" + item_hashMap.get("id") + "_" + item_hashMap.get("secret") + "_" + imgsize + ".jpg";
+        }
     }
 
     public static Bitmap getBitmap_old(String img_url) throws Exception {
@@ -100,5 +118,10 @@ public class GetJson extends HttpTools {
             bitmap = BitmapFactory.decodeStream(inputStream);
         }
         return bitmap;
+    }
+
+    public static ByteArrayOutputStream getBAOS(String img_url) throws Exception{
+        HttpTools httpTools = new HttpTools(img_url);
+        return httpTools.getbyteArrayOutputStream();
     }
 }
