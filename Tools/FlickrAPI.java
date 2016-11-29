@@ -1,23 +1,49 @@
 package com.example.e560.m1117a.Tools;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * Created by E560 on 2016/11/17.
- *
- * https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=15d482f51e1b194f29bb84d130e2d4f2&text=%E6%A9%8B%E6%9C%AC%E3%83%9E%E3%83%8A%E3%83%9F&format=json&nojsoncallback=1&auth_token=72157676567013956-c026765304f87c94&api_sig=06dc08eb8f101e25af04eca464412734
- * https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=15d482f51e1b194f29bb84d130e2d4f2&text=%E6%A3%AE%E4%B8%8B%E6%82%A0%E9%87%8C&format=json&nojsoncallback=1
+ * <p>
  */
 
 public class FlickrAPI {
-    private final String APIURL = "";
 
-    public FlickrAPI(){
+    private HashMap<String, String> search_opt;
+    private String API_URL;
 
+    public FlickrAPI() {
+        API_URL = "https://api.flickr.com/services/rest/?";
+        search_opt = new HashMap<String, String>();
+        search_opt.put("method", "flickr.photos.search");
+        search_opt.put("api_key", "665f189ad2f511c7c9595aa9a845da03");
+        search_opt.put("format", "json");
+        search_opt.put("nojsoncallback", "1");
     }
 
-    public static String search(String searchtext){
-        String text = searchtext;
-
-        return null;
+    public HashMap<String, String> getsearch_opt() {
+        return search_opt;
     }
 
+    public String getAPI_URL() {
+        return API_URL;
+    }
+
+    public static String search(String text) throws UnsupportedEncodingException {
+        FlickrAPI flickrapi = new FlickrAPI();
+        StringBuffer url_string = new StringBuffer();
+        HashMap<String, String> search_url = flickrapi.getsearch_opt();
+        search_url.put("text", URLEncoder.encode(text, "UTF-8"));
+        Set<String> key = search_url.keySet();
+        for (String str : key) {
+            if (search_url.get(str) != null && search_url.get(str) != "") {
+                url_string.append(str + "=" + search_url.get(str) + "&");
+            }
+        }
+//        System.out.println(flickrapi.getAPI_URL() + url_string);
+        return flickrapi.getAPI_URL() + url_string;
+    }
 }
