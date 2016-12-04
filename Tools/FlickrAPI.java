@@ -1,4 +1,4 @@
-package com.example.e560.m1117a.Tools;
+package com.example.e560.m1126a.ToolsClass;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Created by E560 on 2016/11/17.
- * <p>
+ * Created by E560 on 2016/11/29.
  */
 
 public class FlickrAPI {
@@ -32,7 +31,7 @@ public class FlickrAPI {
         return API_URL;
     }
 
-    public static String search(String text) throws UnsupportedEncodingException {
+    public static String Search(String text) throws Exception {
         FlickrAPI flickrapi = new FlickrAPI();
         StringBuffer url_string = new StringBuffer();
         HashMap<String, String> search_url = flickrapi.getsearch_opt();
@@ -47,3 +46,4 @@ public class FlickrAPI {
         return flickrapi.getAPI_URL() + url_string;
     }
 }
+
